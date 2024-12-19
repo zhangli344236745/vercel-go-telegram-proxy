@@ -59,20 +59,6 @@ func (tb *TelegramBot) handleUpdate(update tgbotapi.Update) {
 	}
 }
 
-func main() {
-
-	// 启动服务器
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	log.Printf("服务器启动，监听端口 %s", port)
-	if err := router.Run(":" + port); err != nil {
-		log.Fatalf("服务器启动失败: %v", err)
-	}
-}
-
 func init() {
 
 	// 从环境变量读取Telegram Bot Token
