@@ -23,7 +23,7 @@ func NewTelegramBot(token string) (*TelegramBot, error) {
 	}
 
 	// 设置日志级别
-	bot.Debug = true
+	//bot.Debug = true
 
 	return &TelegramBot{bot: bot}, nil
 }
@@ -72,9 +72,6 @@ func init() {
 	if err != nil {
 		log.Fatalf("创建Telegram机器人失败: %v", err)
 	}
-
-	// 创建Gin路由器
-	router := gin.Default()
 
 	// Webhook处理器
 	router.POST("/webhook", func(c *gin.Context) {
