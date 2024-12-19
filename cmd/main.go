@@ -1,4 +1,4 @@
-package api
+package main
 
 import (
 	"fmt"
@@ -9,8 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
-
-var router *gin.Engine
 
 type TelegramBot struct {
 	bot *tgbotapi.BotAPI
@@ -60,21 +58,6 @@ func (tb *TelegramBot) handleUpdate(update tgbotapi.Update) {
 }
 
 func main() {
-
-	// 启动服务器
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	log.Printf("服务器启动，监听端口 %s", port)
-	if err := router.Run(":" + port); err != nil {
-		log.Fatalf("服务器启动失败: %v", err)
-	}
-}
-
-func init() {
-
 	// 从环境变量读取Telegram Bot Token
 	token := os.Getenv("TELEGRAM_BOT_TOKEN")
 	if token == "" {
@@ -113,12 +96,6 @@ func init() {
 		})
 	})
 
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"echo": "ping",
-		})
-	})
-
 	// 设置Webhook
 	webhookURL := os.Getenv("WEBHOOK_URL")
 	if webhookURL == "" {
@@ -131,8 +108,14 @@ func init() {
 		log.Fatalf("设置Webhook失败: %v", err)
 	}
 
-}
+	// 启动服务器
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
-func Listen(w http.ResponseWriter, r *http.Request) {
-	router.ServeHTTP(w, r)
+	log.Printf("服务器启动，监听端口 %s", port)
+	if err := router.Run(":" + port); err != nil {
+		log.Fatalf("服务器启动失败: %v", err)
+	}
 }
