@@ -1,13 +1,15 @@
 {
-  "routes": [
+  "version": 2,
+  "builds": [
     {
-      "src": "/.*",
-      "dest": "/api/router.go"
+      "src": "main.go",
+      "use": "@vercel/go"
     }
   ],
-  "functions": {
-    "api/router.go": {
-      "memory": 128
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/main.go"
     }
-  }
+  ]
 }

@@ -96,6 +96,13 @@ func main() {
 		})
 	})
 
+	// 健康检查端点
+	router.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"status": "healthy",
+		})
+	})
+
 	// 设置Webhook
 	webhookURL := os.Getenv("WEBHOOK_URL")
 	if webhookURL == "" {
